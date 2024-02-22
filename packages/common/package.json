@@ -1,20 +1,14 @@
 {
-  "name": "boba-event-sourcing",
+  "name": "boba-common",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "types": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
   "author": "",
   "license": "ISC",
-  "workspaces": [
-    "apps/*",
-    "packages/common"
-  ],
   "dependencies": {
-    "@trpc/server": "^10.45.1",
-    "zod": "^3.22.4"
+    "typescript": "^5.3.3"
   }
 }

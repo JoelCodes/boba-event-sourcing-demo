@@ -1,27 +1,29 @@
+import { initTRPC } from '@trpc/server';
 import express from 'express';
-import { buildSchema } from 'graphql';
-import { createHandler } from 'graphql-http/lib/use/express';
-import {ruruHTML} from 'ruru/server';
+import * as trpcExpress from '@trpc/server/adapters/express';
+import z from 'zod';
+import { Context } from 'boba-common';
+import { createOrder, getMenu } from './data';
 
 const app = express();
 const { PORT = 3000 } = process.env;
 
-const schema = buildSchema(`
-  type Query {
-    hello: String
-  }
-`)
+const createContext = ({}:trpcExpress.CreateExpressContextOptions):Context => ({});
+const t = initTRPC.context<Context>().create();
 
-const root = {
-  hello: () => 'Hello, world!'
-};
-
-app.all('/graphql', createHandler({ schema, rootValue: root }));
-
-app.get('/graphiql', (_, res) => {
-  res.type('text/html');
-  res.end(ruruHTML({endpoint: '/graphql'}))
+const appRouter = t.router({
+  getMenu:t.procedure.query((opts) => {
+    return getMenu();
+  }),
+  createOrder:t.procedure.mutation((opts) => {
+    return createOrder();
+  })
 });
+
+app.use('/trpc', trpcExpress.createExpressMiddleware({ 
+  router: appRouter, 
+  createContext 
+}));
 
 app.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`);
