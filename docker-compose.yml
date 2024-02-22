@@ -1,0 +1,18 @@
+services:
+  cache:
+    image: redis/redis-stack
+    ports:
+      - "6379:6379"
+  eventstore:
+    image: eventstore/eventstore
+    ports:
+      - "2113:2113"
+      - "1113:1113"
+  guest-api:
+    build: ./apps/guest-api
+    ports:
+      - 8080:8080
+    environment:
+      PORT: 8080
+  
+  
