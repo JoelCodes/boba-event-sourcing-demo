@@ -12,7 +12,7 @@ This will incorporate the following technologies and techniques
 
 * Event Sourcing
 * Microservices
-* gRPC & GraphQL
+* gRPC & tRPC
 
 ![Network Diagram](./diagrams/main.excalidraw.svg)
 
